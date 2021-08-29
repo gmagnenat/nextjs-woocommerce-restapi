@@ -1,19 +1,19 @@
-import Header from '../src/components/header/index';
-import Footer from '../src/components/footer/index';
+import Header from '../src/components/layouts/header';
+import Footer from '../src/components/layouts/footer';
 import axios from 'axios';
 
-export default function Home(props) {
-  console.warn('props', props);
+export default function Home({ data }) {
+  const { header, footer } = data;
   return (
     <div>
-      <Header />
+      <Header header={header} />
       <main>
         <h1>
           Welcome to <a href='https://nextjs.org'>Next.js!</a>
         </h1>
         <p className='text-green-500'>Hello</p>
       </main>
-      <Footer />
+      <Footer footer={footer} />
     </div>
   );
 }
@@ -24,9 +24,7 @@ export async function getStaticProps() {
   );
 
   return {
-    props: {
-      data: data || {},
-    },
+    props: data || {},
 
     revalidate: 1,
   };
