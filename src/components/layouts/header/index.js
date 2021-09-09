@@ -1,13 +1,14 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { useState } from 'react';
 import { isEmpty } from 'lodash';
-import UserIcon from '../../../components/icons/User';
-import WishlistIcon from '../../../components/icons/Wishlist';
-import BagIcon from '../../../components/icons/Bag';
+import { Bag, User, Wishlist } from '../../icons';
 
 export default function Header({ header }) {
   const { headerMenuItems, siteDescription, siteLogoUrl, siteTitle, favicon } =
     header || {};
+
+  const [isMenuVisible, setMenuVisibility] = useState(false);
 
   return (
     <>
@@ -53,7 +54,10 @@ export default function Header({ header }) {
               </span>
             </div>
             <div className='block lg:hidden'>
-              <button className='flex items-center px-3 py-2 border rounded text-black border-black hover:text-black hover:border-black'>
+              <button
+                onClick={() => setMenuVisibility(!isMenuVisible)}
+                className='flex items-center px-3 py-2 border rounded text-black border-black hover:text-black hover:border-black'
+              >
                 <svg
                   className='fill-current h-3 w-3'
                   viewBox='0 0 20 20'
@@ -64,7 +68,11 @@ export default function Header({ header }) {
                 </svg>
               </button>
             </div>
-            <div className='h-0 w-full overflow-hidden lg:h-full flex-grow lg:flex lg:items-center lg:w-auto'>
+            <div
+              className={`${
+                isMenuVisible ? 'max-h-full h-full' : 'h-0'
+              } w-full overflow-hidden lg:h-full flex-grow lg:flex lg:items-center lg:w-auto`}
+            >
               <div className='text-sm font-medium uppercase lg:flex-grow'>
                 {!isEmpty(headerMenuItems) && headerMenuItems.length
                   ? headerMenuItems.map((menuItem) => (
@@ -82,21 +90,21 @@ export default function Header({ header }) {
                   href='#responsive-header'
                   className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10'
                 >
-                  <UserIcon />
+                  <User />
                   Profile
                 </a>
                 <a
                   href='#responsive-header'
-                  className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10'
+                  className='flex mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10'
                 >
-                  <WishlistIcon />
+                  <Wishlist />
                   Wishlist
                 </a>
                 <a
-                  className='block mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10'
+                  className='flex mt-4 lg:inline-block lg:mt-0 text-black hover:text-black mr-10'
                   href='/cart/'
                 >
-                  <BagIcon />
+                  <Bag />
                   Bag
                 </a>
               </div>
